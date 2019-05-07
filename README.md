@@ -9,6 +9,6 @@ Numpy
 
 ### Running Trends on a map
 
-Created with a 480 x 640 input (you will need to update if your camera feed is a higher resolution for better results)
+Created with a 480 x 640 input (you will need to update this if your camera feed is a higher resolution for better results)
 
-Requires a webcam. Alternatively you can update video_input = cv2.VideoCapture("filepath\filename") to run Facetracker with a video recording.
+Requires a webcam. Alternatively, you can update video_input = cv2.VideoCapture("filepath\filename") to run Facetracker with a video recording.
