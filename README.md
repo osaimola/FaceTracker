@@ -7,7 +7,7 @@ OpenCV
 
 Numpy
 
-### Running Trends on a map
+### Running FaceTracker
 
 Created with a 480 x 640 input (you will need to update this if your camera feed is a higher resolution for better results)
 
