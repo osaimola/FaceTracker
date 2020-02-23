@@ -1,9 +1,16 @@
-import cv2
+# -*- coding: utf-8 -*-
+"""
+Spyder Editor
+
+This is a temporary script file.
+"""
+
 import numpy
+import cv2
 
 # load haar cascade classifier trained to recognize faces
 face_cascade = cv2.CascadeClassifier(
-    r"C:\Users\Osa's\Desktop\UDEMY PRojcts\OpenCVFiles\haarcascade_frontalface_default.xml")
+    r"haarcascade_frontalface_default.xml")
 
 # get input from webcam
 video_input = cv2.VideoCapture(0)
@@ -18,7 +25,9 @@ while True:
     try:
         x, y, w, h = faces[0]
 
-        # compute coordinates for adjusted face frame
+        """ compute coordinates for adjusted face frame
+                face detection is aquare from eyes to lips so add padding to capture 
+                chin and hair and keep the 1.33 ratio of width to height"""
         a = h / 2
         x1 = x - (1.6665 * a)
         x2 = h + (x + (1.6665 * a))
@@ -30,16 +39,20 @@ while True:
         if x1 >= 0 and y1 >= 0 and x2 <= 640 and y2 <= 480:
             # display resulting image
             cropped_image = cv2.resize(cropped_image, (640, 480))
-            cv2.imshow("FaceFinder", cropped_image)
+            image = cv2.rectangle(frame, (x, y), (x + w, y + h), (255, 0, 0), 2)
+            horizontal_stacked = numpy.hstack((cropped_image, image))
+            cv2.imshow("FaceFinder", horizontal_stacked)
         else:
             # display full image with outline on detected face
             # cv2.rectangle(source, top_left_coordinates, bottom_right_coordinates, BGR_color_values, line_thickness
             image = cv2.rectangle(frame, (x, y), (x + w, y + h), (255, 0, 0), 2)
-            cv2.imshow("FaceFinder", image)
+            horizontal_stacked = numpy.hstack((image, frame))
+            cv2.imshow("FaceFinder", horizontal_stacked)
 
     # if no faces detected, show original frame
     except IndexError:
-        cv2.imshow("FaceFinder", frame)
+        horizontal_stacked = numpy.hstack((frame, frame))
+        cv2.imshow("FaceFinder", horizontal_stacked)
 
     key = cv2.waitKey(1)
     if key == ord("q"):
